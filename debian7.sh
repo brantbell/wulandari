@@ -109,18 +109,10 @@ apt-get update
 apt-get install neofetch
 
 echo "clear" >> .bashrc
-echo 'echo -e "WELCOME GRETONGER $HOSTNAME"' >> .bashrc
-echo 'echo -e "Script By MBAH SHONDONG"' >> .bashrc
+echo 'echo -e "WELCOME VPS PREMIUM $HOSTNAME"' >> .bashrc
+echo 'echo -e "Script By ZHANGZI-MANIA"' >> .bashrc
 echo 'echo -e "Ketik menu untuk menampilkan daftar perintah"' >> .bashrc
 echo 'echo -e ""' >> .bashrc
-
-# Swap Ram
-dd if=/dev/zero of=/swapfile bs=1024 count=1024k
-mkswap /swapfile
-swapon /swapfile
-echo -e "\n/swapfile          swap            swap    defaults        0 0" | tee -a /etc/fstab > /dev/null
-chown root:root /swapfile
-chmod 0600 /swapfile
 
 # install webserver
 cd
