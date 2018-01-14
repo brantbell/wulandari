@@ -127,7 +127,7 @@ service php5-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "https://github.com/brantbell/wulandari/srie/repo/openvpn-debian.tar"
+wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
 wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/1194.conf"
@@ -148,9 +148,9 @@ cp client.ovpn /home/vps/public_html/
 
 cd
 # install badvpn
-wget -O /usr/bin/badvpn-udpgw "https://github.com/brantbell/wulandari/srie/repo/badvpn-udpgw"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/badvpn-udpgw"
 if [ "$OS" == "x86_64" ]; then
-  wget -O /usr/bin/badvpn-udpgw "https://github.com/brantbell/wulandari/srie/repo/badvpn-udpgw64"
+  wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/badvpn-udpgw64"
 fi
 sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
 chmod +x /usr/bin/badvpn-udpgw
@@ -201,7 +201,7 @@ service ssh restart
 
 # upgade dropbear 2017.75
 apt-get install zlib1g-dev
-wget https://github.com/brantbell/wulandari/srie/repo/dropbear-2017.75.tar.bz2
+wget https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/dropbear-2017.75.tar.bz2
 bzip2 -cd dropbear-2017.75.tar.bz2 | tar xvf -
 cd dropbear-2017.75
 ./configure
@@ -212,7 +212,7 @@ cd && rm -rf dropbear-2017.75 && rm -rf dropbear-2017.75.tar.bz2
 
 # install vnstat gui
 cd /home/vps/public_html/
-wget https://github.com/brantbell/wulandari/srie/repo/vnstat_php_frontend-1.5.1.tar.gz
+wget https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/vnstat_php_frontend-1.5.1.tar.gz
 tar xf vnstat_php_frontend-1.5.1.tar.gz
 rm vnstat_php_frontend-1.5.1.tar.gz
 mv vnstat_php_frontend-1.5.1 vnstat
@@ -252,7 +252,7 @@ apt-get -y install fail2ban;service fail2ban restart;
 
 # install squid3
 apt-get -y install squid3
-wget -O /etc/squid3/squid.conf "https://raw.githubusercom/brantbell/wulandari/srie/repo/squid3.conf"
+wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/squid3.conf"
 sed -i $MYIP2 /etc/squid3/squid.conf;
 service squid3 restart
 
