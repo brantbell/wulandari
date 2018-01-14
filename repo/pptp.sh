@@ -7,31 +7,8 @@ fi
 MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`;
 #MYIP=$(wget -qO- ipv4.icanhazip.com)
 
-#vps="zvur";
-vps="aneka";
-
-
-	source="https://raw.githubusercontent.com/elangoverdosis88/deenie"
-
-
 # go to root
 cd
-
-# check registered ip
-wget -q -O IP $source/debian7/IP.txt
-if ! grep -w -q $MYIP IP; then
-	echo "Maaf, hanya IP yang terdaftar yang bisa menggunakan script ini!"
-	if [[ $vps = "zvur" ]]; then
-		echo "Hubungi: Yusuf ardiansyah atau elang overdosis)"
-	else
-		echo "Hubungi: Yusuf ardiansyah atau elang overdosis)"
-	fi
-	rm -f /root/IP
-	exit
-fi
-
-u="deenie11"
-p="deenie"
 
 # get the VPS IP
 #ip=`ifconfig venet0:0 | grep 'inet addr' | awk {'print $2'} | sed s/.*://`
