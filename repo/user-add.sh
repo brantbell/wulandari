@@ -45,8 +45,8 @@ else
 	echo "Data Login:"
 	echo "-----------------------------------"
 	echo "Host/IP: $MYIP"
-	echo "Dropbear Port: 777, 442"
-	echo "Ssl/Tsl Port: 443
+	echo "Dropbear Port: 777, 442, 80"
+	echo "Ssl/Tsl Port: 443"
 	echo "OpenSSH Port: 22, 143"
 	echo "Squid Proxy: 8000, 3128"
 	echo "OpenVPN Config: http://$MYIP:81/client.ovpn"
