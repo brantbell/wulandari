@@ -326,7 +326,7 @@ mkswap /swapfile
 # jalan swapfile
 swapon /swapfile
 #auto star saat reboot
-wget https://github.com/brantbell/wulandari/srie/repo/fstab
+wget https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/fstab
 mv ./fstab /etc/fstab
 chmod 644 /etc/fstab
 sysctl vm.swappiness=10
