@@ -33,7 +33,7 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service ssh restart
 
 # set repo
-wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/sources.list.debian7"
+wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/sources.list.debian7"
 wget "http://www.dotdeb.org/dotdeb.gpg"
 wget "http://www.webmin.com/jcameron-key.asc"
 cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
@@ -126,39 +126,39 @@ chmod 0600 /swapfile
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/nginx.conf"
 mkdir -p /home/vps/public_html
 echo "<pre>Welcome webserver MBAH SHONDONG Hawok Hawok Jozz</pre>" > /home/vps/public_html/index.html
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/vps.conf"
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "https://github.com/Mbah-Shondong/Debian732/raw/master/Debian7/openvpn-debian.tar"
+wget -O /etc/openvpn/openvpn.tar "https://github.com/brantbell/wulandari/srie/repo/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/1194.conf"
+wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/1194.conf"
 service openvpn restart
 sysctl -w net.ipv4.ip_forward=1
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 iptables -t nat -I POSTROUTING -s 192.168.100.0/24 -o eth0 -j MASQUERADE
 iptables-save > /etc/iptables_yg_baru_dibikin.conf
-wget -O /etc/network/if-up.d/iptables "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/iptables"
+wget -O /etc/network/if-up.d/iptables "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/iptables"
 chmod +x /etc/network/if-up.d/iptables
 service openvpn restart
 
 #konfigurasi openvpn
 cd /etc/openvpn/
-wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/client-1194.conf"
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/client-1194.conf"
 sed -i $MYIP2 /etc/openvpn/client.ovpn;
 cp client.ovpn /home/vps/public_html/
 
 cd
 # install badvpn
-wget -O /usr/bin/badvpn-udpgw "https://github.com/Mbah-Shondong/Debian732/raw/master/Debian7/badvpn-udpgw"
+wget -O /usr/bin/badvpn-udpgw "https://github.com/brantbell/wulandari/srie/repo/badvpn-udpgw"
 if [ "$OS" == "x86_64" ]; then
-  wget -O /usr/bin/badvpn-udpgw "https://github.com/Mbah-Shondong/Debian732/raw/master/Debian7/badvpn-udpgw64"
+  wget -O /usr/bin/badvpn-udpgw "https://github.com/brantbell/wulandari/srie/repo/badvpn-udpgw64"
 fi
 sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
 chmod +x /usr/bin/badvpn-udpgw
@@ -166,8 +166,8 @@ screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 
 # install mrtg
 #apt-get update;apt-get -y install snmpd;
-wget -O /etc/snmp/snmpd.conf "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/snmpd.conf"
-wget -O /root/mrtg-mem "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/mrtg-mem.sh"
+wget -O /etc/snmp/snmpd.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/snmpd.conf"
+wget -O /root/mrtg-mem "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/mrtg-mem.sh"
 chmod +x /root/mrtg-mem
 cd /etc/snmp/
 sed -i 's/TRAPDRUN=no/TRAPDRUN=yes/g' /etc/default/snmpd
@@ -175,7 +175,7 @@ service snmpd restart
 snmpwalk -v 1 -c public localhost 1.3.6.1.4.1.2021.10.1.3.1
 mkdir -p /home/vps/public_html/mrtg
 cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg.cfg public@localhost
-curl "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/mrtg.conf" >> /etc/mrtg.cfg
+curl "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/mrtg.conf" >> /etc/mrtg.cfg
 sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg.cfg
 sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg.cfg
 indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg.cfg
@@ -193,16 +193,34 @@ service ssh restart
 # install dropbear
 apt-get -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=443/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 443 -p 80 -b /etc/issue.net"/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=777/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 442 -p 80 -b /etc/issue.net"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 service ssh restart
 service dropbear restart
 
+# bannerssh
+wget "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/bannerssh"
+mv ./bannerssh /bannerssh
+chmod 0644 /bannerssh
+service dropbear restart
+service ssh restart
+
+# upgade dropbear 2017.75
+apt-get install zlib1g-dev
+wget https://github.com/brantbell/wulandari/srie/repo/dropbear-2017.75.tar.bz2
+bzip2 -cd dropbear-2017.75.tar.bz2 | tar xvf -
+cd dropbear-2017.75
+./configure
+make && make install
+mv /usr/sbin/dropbear /usr/sbin/dropbear.old
+ln /usr/local/sbin/dropbear /usr/sbin/dropbear
+cd && rm -rf dropbear-2017.75 && rm -rf dropbear-2017.75.tar.bz2
+
 # install vnstat gui
 cd /home/vps/public_html/
-wget https://github.com/Mbah-Shondong/Debian732/raw/master/Debian7/vnstat_php_frontend-1.5.1.tar.gz
+wget https://github.com/brantbell/wulandari/srie/repo/vnstat_php_frontend-1.5.1.tar.gz
 tar xf vnstat_php_frontend-1.5.1.tar.gz
 rm vnstat_php_frontend-1.5.1.tar.gz
 mv vnstat_php_frontend-1.5.1 vnstat
@@ -214,12 +232,35 @@ sed -i 's/Internal/Internet/g' config.php
 sed -i '/SixXS IPv6/d' config.php
 cd
 
+# block all port except
+sed -i '$ i\iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -d 127.0.0.1 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 21 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 81 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 109 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 110 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 143 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 3128 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 8000 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 8080 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 10000 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp --dport 55 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p udp -m udp --dport 2500 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p udp -m udp -j DROP' /etc/rc.local
+sed -i '$ i\iptables -A OUTPUT -p tcp -m tcp -j DROP' /etc/rc.local
+
 # install fail2ban
 apt-get -y install fail2ban;service fail2ban restart;
 
 # install squid3
 apt-get -y install squid3
-wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/squid3.conf"
+wget -O /etc/squid3/squid.conf "https://raw.githubusercom/brantbell/wulandari/srie/repo/squid3.conf"
 sed -i $MYIP2 /etc/squid3/squid.conf;
 service squid3 restart
 
@@ -234,34 +275,34 @@ service webmin restart
 service vnstat restart
 
 # install pptp vpn
-wget https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/pptp.sh
+wget "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/pptp.sh"
 chmod +x pptp.sh
 ./pptp.sh
 
 # download script
 cd
-wget -O /usr/bin/benchmark "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/benchmark.sh"
-wget -O /usr/bin/speedtest "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/speedtest.py"
-wget -O /usr/bin/ps_mem "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/ps_mem.py"
-wget -O /etc/issue.net "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/banner"
-wget -O /usr/bin/dropmon "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/dropmon.sh"
-wget -O /usr/bin/menu "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/menu.sh"
-wget -O /usr/bin/user-add "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-add.sh"
-wget -O /usr/bin/user-add-vpn "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-add-vpn.sh"
-wget -O /usr/bin/user-add-pptp "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-add-pptp.sh"
-wget -O /usr/bin/user-expire "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-expire.sh"
-wget -O /usr/bin/user-gen "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-gen.sh"
-wget -O /usr/bin/user-limit "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-limit.sh"
-wget -O /usr/bin/user-list "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-list.sh"
-wget -O /usr/bin/user-login "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-login.sh"
-wget -O /usr/bin/user-active-list "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-active-list.sh"
-wget -O /usr/bin/user-renew "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-renew.sh"
-wget -O /usr/bin/user-del "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-del.sh"
-wget -O /usr/bin/user-pass "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-pass.sh"
-wget -O /usr/bin/user-expire-list "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-expire-list.sh"
-wget -O /usr/bin/user-banned "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/user-banned.sh"
-wget -O /usr/bin/unbanned-user "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/unbanned-user.sh"
-wget -O /usr/bin/delete-user-expire "https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/Debian7/delete-user-expire.sh"
+wget -O /usr/bin/benchmark "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/benchmark.sh"
+wget -O /usr/bin/speedtest "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/speedtest.py"
+wget -O /usr/bin/ps_mem "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/ps_mem.py"
+#wget -O /etc/issue.net "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/banner"
+wget -O /usr/bin/dropmon "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/dropmon.sh"
+wget -O /usr/bin/menu "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/menu.sh"
+wget -O /usr/bin/user-add "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-add.sh"
+wget -O /usr/bin/user-add-vpn "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-add-vpn.sh"
+wget -O /usr/bin/user-add-pptp "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-add-pptp.sh"
+wget -O /usr/bin/user-expire "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-expire.sh"
+wget -O /usr/bin/user-gen "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-gen.sh"
+wget -O /usr/bin/user-limit "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-limit.sh"
+wget -O /usr/bin/user-list "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-list.sh"
+wget -O /usr/bin/user-login "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-login.sh"
+wget -O /usr/bin/user-active-list "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-active-list.sh"
+wget -O /usr/bin/user-renew "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-renew.sh"
+wget -O /usr/bin/user-del "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-del.sh"
+wget -O /usr/bin/user-pass "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-pass.sh"
+wget -O /usr/bin/user-expire-list "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-expire-list.sh"
+wget -O /usr/bin/user-banned "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/user-banned.sh"
+wget -O /usr/bin/unbanned-user "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/unbanned-user.sh"
+wget -O /usr/bin/delete-user-expire "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/delete-user-expire.sh"
 echo "0 0 * * * root /usr/bin/user-expire" > /etc/cron.d/user-expire
 echo "* * * * * service dropbear restart" > /etc/cron.d/dropbear
 chmod +x /usr/bin/benchmark
@@ -286,6 +327,33 @@ chmod +x /usr/bin/user-banned
 chmod +x /usr/bin/unbanned-user
 chmod +x /usr/bin/delete-user-expire
 
+# swap ram
+dd if=/dev/zero of=/swapfile bs=1024 count=4096k
+# buat swap
+mkswap /swapfile
+# jalan swapfile
+swapon /swapfile
+#auto star saat reboot
+wget https://github.com/brantbell/wulandari/srie/repo/fstab
+mv ./fstab /etc/fstab
+chmod 644 /etc/fstab
+sysctl vm.swappiness=10
+#permission swapfile
+chown root:root /swapfile 
+chmod 0600 /swapfile
+cd
+
+#install stunnel ssl
+apt-get update
+apt-get upgrade
+apt-get install stunnel4
+wget -O /etc/stunnel/stunnel.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/stunnel.conf"
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+/etc/init.d/stunnel4 restart
+
 # finishing
 chown -R www-data:www-data /home/vps/public_html
 service cron restart
@@ -309,7 +377,7 @@ echo "=======================================================" | tee -a log-inst
 echo "Service :" | tee -a log-install.txt
 echo "---------" | tee -a log-install.txt
 echo "OpenSSH  : 22, 143" | tee -a log-install.txt
-echo "Dropbear : 80, 443" | tee -a log-install.txt
+echo "Dropbear&Ssl : 777, 442, 443" | tee -a log-install.txt
 echo "Squid3   : 8080, 3128 (limit to IP $MYIP)" | tee -a log-install.txt
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.ovpn)"  | tee -a log-install.txt
 echo "badvpn   : badvpn-udpgw port 7300" | tee -a log-install.txt
@@ -359,9 +427,9 @@ echo "Auto Lock User Expire tiap jam 00:00" | tee -a log-install.txt
 echo "Auto Reboot tiap jam 00:00" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 
-echo "Edited By MUHAMMAD AMAN" | tee -a log-install.txt
-echo "ADMIN WWW MBAH SHONDONG COM" | tee -a log-install.txt
-echo "Internet Gratis Sak Modarre" | tee -a log-install.txt
+echo "Edited By ZHANG-ZI" | tee -a log-install.txt
+echo "ADMIN WWW KOPET88.COM" | tee -a log-install.txt
+echo "Internet Gratis Sak Lawase" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "Log Instalasi --> /root/log-install.txt" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
@@ -373,6 +441,6 @@ echo "=============Ketik reboot ENTER =================="  | tee -a log-install.
 cd ~/
 rm -f /root/mrtg-mem
 rm -f /root/pptp.sh
-rm -f /root/dropbear-2016.74.tar.bz2
-rm -rf /root/dropbear-2016.74
+rm -f /root/dropbear-2017.75.tar.bz2
+rm -rf /root/dropbear-2017.75
 rm -f /root/debian7.sh
