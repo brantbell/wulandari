@@ -22,8 +22,8 @@ do
 
 	echo -e $white"==========================================================="
 	echo -e $white">>Fitur Menu Debian 7 - IP VPS Anda: $MYIP "
-	echo -e $lightgreen"Edited By : MBAH SHONDONG"
-	echo -e $lightgreen"www.mbahshondong.com"
+	echo -e $lightgreen"Edited By : ZHANG-ZI"
+	echo -e $lightgreen"www.zahwanugrah.com"
 	echo ""
 	cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo )
 	cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
@@ -172,7 +172,7 @@ do
        ;;
        21)
        clear
-       wget https://raw.githubusercontent.com/Mbah-Shondong/Debian732/master/update.sh
+       wget https://raw.githubusercontent.com/brantbell/wulandari/srie/update.sh
        chmod +x update.sh
       ./update.sh
        exit
