@@ -65,7 +65,7 @@ do
 	echo ""
 	echo -e $white" x) Exit"
 	echo ""
-	echo     "TTD. Mbah Shondong"
+	echo     "TTD. ZHANGZI-MANIA"
 	read -p  "Ketik No Yang Anda Mau,,Tekan Enter √: " option1
 	case $option1 in
 		1)
