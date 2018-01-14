@@ -64,13 +64,13 @@ if [ $1 ]; then
 	echo "-------------------------------------------------------"
 	echo ""
 	echo "#######################################################"
-	echo "#                SCRYPT MBAH SHONDONG                 #"
-	echo "#            http://www.mbahshondong.com              #"
+	echo "#                 SCRYPT BY ZHANG-ZI                  #"
+	echo "#             http://www.zahwanugrah.com              #"
 	echo "#-----------------------------------------------------#"
-	echo "#                     HAWOK JOZZ                      #"
-	echo "#      https://www.facebook.com/groups/pokoemelu      #"
+	echo "#                      PAI-JOZZ                       #"
+	echo "#      https://www.facebook.com/groups/arema-nia      #"
 	echo "#-----------------------------------------------------#"
-	echo "#         [== INTERNET GRATIS SAK MODARRE ==]         #"
+	echo "#          [== INTERNET GRATIS SAK BOSENE ==]         #"
 	echo "#######################################################"
 	echo -e $White""
 	echo ""
@@ -78,7 +78,7 @@ if [ $1 ]; then
 	echo ""
 else
 	echo "  Gunakan perintah ./dropmon [port]"
-	echo "  Contoh : ./dropmon 443"
+	echo "  Contoh : ./dropmon 442"
 	echo ""
 fi
 
