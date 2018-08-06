@@ -5,5 +5,8 @@ deb http://security.debian.org/ jessie/updates main contrib
 deb-src http://security.debian.org/ jessie/updates main contrib
 deb http://packages.dotdeb.org jessie all
 
+deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free
+deb-src http://ftp.debian.org/debian/ jessie-updates main contrib non-free
+
 deb http://download.webmin.com/download/repository sarge contrib
 deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib
