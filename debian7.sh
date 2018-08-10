@@ -5,14 +5,19 @@ if [ $USER != 'root' ]; then
 	exit
 fi
 
+#Requirement
+if [ ! -e /usr/bin/curl ]; then
+    apt-get -y update && apt-get -y upgrade
+	apt-get -y install curl
+fi
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
 OS=`uname -m`;
-MYIP=$(wget -qO- ipv4.icanhazip.com);
+MYIP=$(curl -4 icanhazip.com)
+if [ $MYIP = "" ]; then
+   MYIP=`ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1`;
+fi
 MYIP2="s/xxxxxxxxx/$MYIP/g";
-ether=`ifconfig | cut -c 1-8 | sort | uniq -u | grep venet0 | grep -v venet0:`
-if [ "$ether" = "" ]; then
-        ether=eth0
 fi
 
 # go to root
@@ -200,15 +205,15 @@ service dropbear restart
 service ssh restart
 
 # upgade dropbear 2017.75
-apt-get install zlib1g-dev
-wget https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/dropbear-2017.75.tar.bz2
-bzip2 -cd dropbear-2017.75.tar.bz2 | tar xvf -
-cd dropbear-2017.75
-./configure
-make && make install
-mv /usr/sbin/dropbear /usr/sbin/dropbear.old
-ln /usr/local/sbin/dropbear /usr/sbin/dropbear
-cd && rm -rf dropbear-2017.75 && rm -rf dropbear-2017.75.tar.bz2
+#apt-get install zlib1g-dev
+#wget https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/dropbear-2017.75.tar.bz2
+#bzip2 -cd dropbear-2017.75.tar.bz2 | tar xvf -
+#cd dropbear-2017.75
+#./configure
+#make && make install
+#mv /usr/sbin/dropbear /usr/sbin/dropbear.old
+#ln /usr/local/sbin/dropbear /usr/sbin/dropbear
+#cd && rm -rf dropbear-2017.75 && rm -rf dropbear-2017.75.tar.bz2
 
 # install vnstat gui
 cd /home/vps/public_html/
@@ -433,6 +438,6 @@ echo "=============Ketik reboot ENTER =================="  | tee -a log-install.
 cd ~/
 rm -f /root/mrtg-mem
 rm -f /root/pptp.sh
-rm -f /root/dropbear-2017.75.tar.bz2
-rm -rf /root/dropbear-2017.75
+#rm -f /root/dropbear-2017.75.tar.bz2
+#rm -rf /root/dropbear-2017.75
 rm -f /root/debian7.sh
