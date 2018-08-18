@@ -40,14 +40,14 @@ wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/brantbell/wulan
 wget "http://www.dotdeb.org/dotdeb.gpg"
 #wget "http://www.webmin.com/jcameron-key.asc"
 cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
-3cat jcameron-key.asc | apt-key add -;rm jcameron-key.asc
+#cat jcameron-key.asc | apt-key add -;rm jcameron-key.asc
 
 # remove unused
 apt-get -y --purge remove samba*;
 apt-get -y --purge remove apache2*;
 apt-get -y --purge remove sendmail*;
 apt-get -y --purge remove bind9*;
-#apt-get -y autoremove;
+apt-get -y autoremove;
 
 # update
 apt-get update;apt-get -y upgrade;
@@ -192,8 +192,7 @@ sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=777/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 442 -p 80 -b /etc/issue.net"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
-service ssh restart
-service dropbear restart
+/etc/init.d/dropbear restart
 
 # bannerssh
 wget "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/bannerssh"
@@ -255,7 +254,40 @@ apt-get -y install fail2ban;service fail2ban restart;
 
 # install squid3
 apt-get -y install squid3
-wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/squid3.conf"
+#wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/brantbell/wulandari/srie/repo/squid3.conf"
+#sed -i $MYIP2 /etc/squid3/squid.conf;
+#service squid3 restart
+cat > /etc/squid3/squid.conf <<-END
+acl localhost src 127.0.0.1/32 ::1
+acl to_localhost dst 127.0.0.0/8 0.0.0.0/32 ::1
+acl SSL_ports port 443
+acl Safe_ports port 80
+acl Safe_ports port 21
+acl Safe_ports port 443
+acl Safe_ports port 70
+acl Safe_ports port 210
+acl Safe_ports port 1025-65535
+acl Safe_ports port 280
+acl Safe_ports port 488
+acl Safe_ports port 591
+acl Safe_ports port 777
+acl CONNECT method CONNECT
+acl SSH dst xxxxxxxxx-xxxxxxxxx/32
+http_access allow SSH
+http_access allow manager localhost
+http_access deny manager
+http_access allow localhost
+http_access deny all
+http_port 8080
+http_port 8000
+http_port 3128
+coredump_dir /var/spool/squid3
+refresh_pattern ^ftp: 1440 20% 10080
+refresh_pattern ^gopher: 1440 0% 1440
+refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
+refresh_pattern . 0 20% 4320
+visible_hostname kopet888
+END
 sed -i $MYIP2 /etc/squid3/squid.conf;
 service squid3 restart
 
